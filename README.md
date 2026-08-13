@@ -2,9 +2,23 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![WCAG 2.1 AA](https://img.shields.io/badge/WCAG-2.1%20AA-success.svg)](https://www.w3.org/WAI/standards-guidelines/wcag/)
-[![Stack](https://img.shields.io/badge/Stack-HTML5%20%7C%20Vanilla%20CSS%20%7C%20JavaScript-00D2D3.svg)]()
+[![UX Specification](https://img.shields.io/badge/UX%20Design-Specification%20Document-00D2D3.svg)](UX_DESIGN_SPECIFICATION.md)
 
 **MediGraph** is a high-fidelity, mobile-first healthcare web application and UX prototype that maps patient-selected symptoms to medical conditions and recommends specialized physicians based on clinical correlation scoring. Built with responsive layout ergonomics, glassmorphism UI aesthetics, and strict WCAG 2.1 AA accessibility standards.
+
+---
+
+## 🎨 UX/UI Design Specification Document
+
+> 📄 **[Read the Full Lead Healthcare UX/UI Design Specification & Wireframe Blueprint](UX_DESIGN_SPECIFICATION.md)**
+>
+> Includes:
+> - **Mobile Ergonomics & Thumb Zone Mapping**
+> - **Interactive Symptom Selector Widget Specs**
+> - **Diagnostic Summary Card Information Architecture**
+> - **Mathematical Correlation Scoring Formula**
+> - **WCAG 2.1 AA Accessibility Audit Matrix**
+> - **Tableau Dashboard Layout Specification (1440x900 Grid)**
 
 ---
 
@@ -48,8 +62,8 @@ $$\text{Match \%} = \left( \frac{|\text{Selected Symptoms} \cap \text{Disease Sy
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/medigraph-symptom-checker.git
-   cd medigraph-symptom-checker
+   git clone https://github.com/DasPriti/symptom-checker-portfolio.git
+   cd symptom-checker-portfolio
    ```
 
 2. **Serve locally**:
@@ -64,12 +78,13 @@ $$\text{Match \%} = \left( \frac{|\text{Selected Symptoms} \cap \text{Disease Sy
 ## 🛠️ Project Structure
 
 ```
-├── index.html       # Main HTML5 viewport, mobile frame, & Tableau spec view
-├── style.css        # Custom design system tokens, themes, & responsive layouts
-├── app.js           # Auto-complete, tag manager, & correlation engine logic
-├── data.js          # Processed medical dataset (50 diseases, 655 symptoms)
-├── dataset.csv      # Source medical graph CSV data
-└── README.md        # Project documentation
+├── index.html                  # Main HTML5 viewport, mobile frame, & Tableau spec view
+├── style.css                   # Custom design system tokens, themes, & responsive layouts
+├── app.js                      # Auto-complete, tag manager, & correlation engine logic
+├── data.js                     # Processed medical dataset (50 diseases, 655 symptoms)
+├── dataset.csv                 # Source medical graph CSV data
+├── UX_DESIGN_SPECIFICATION.md  # Detailed Lead Healthcare UX/UI design blueprint
+└── README.md                   # Project portfolio overview
 ```
 
 ---
