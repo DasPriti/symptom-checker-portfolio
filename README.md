@@ -1,26 +1,49 @@
-# 🏥 MediGraph - Mobile-First Medical Symptom Checker & Disease Likelihood UX Engine
+# 🏥 MediGraph - Mobile-First Medical Symptom Checker, Tableau Dashboard & UX Portfolio
 
 [![Live Demo](https://img.shields.io/badge/🌐%20Live%20Design%20Demo-Click%20Here-00D2D3?style=for-the-badge&logo=github)](https://daspriti.github.io/symptom-checker-portfolio/)
 [![UX Specification](https://img.shields.io/badge/📄%20UX%20Design%20Doc-View%20Specification-0284C7?style=for-the-badge)](UX_DESIGN_SPECIFICATION.md)
 [![WCAG 2.1 AA](https://img.shields.io/badge/WCAG-2.1%20AA-success.svg?style=for-the-badge)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 
-**MediGraph** is a high-fidelity, mobile-first healthcare web application and UX design system that maps patient symptoms to clinical conditions, calculates disease likelihood percentages, and recommends specialized physicians.
+**MediGraph** is a high-fidelity, mobile-first healthcare web application, Tableau analytics dashboard, and Lead Healthcare UX design portfolio system.
 
 ---
 
-## 🎨 Visual UI Design Showcase
+## 📈 1. Tableau Desktop Dashboard Layout & Visual Specification
 
-### 1. Mobile Smartphone Symptom Checker Interface
-Features high-contrast emergency triage banner, auto-complete search widget, interactive symptom tag pills, and ranked diagnostic probability cards.
+Designed for enterprise healthcare analytics in **Tableau Desktop / Tableau Server** (1440x900 Tiled Grid):
 
-![Mobile Symptom Checker UI Design](assets/mobile_ui_design.jpg)
+![Tableau Dashboard Desktop UI Design](assets/tableau_dashboard_design.jpg)
+
+### Tableau Container Structure:
+- **Top Banner Container (Fixed 80px)**: Patient Triage & Emergency Severity Filter Parameter.
+- **Left Filter Pane (Tiled 360px)**: Interactive Symptom Selector Extension (Multi-Select).
+- **Center Analytics Container (Flex Auto)**: Disease Correlation & Severity Treemap Heatmap.
+- **Right Provider Pane (Tiled 300px)**: Specialist Referral Network Map & Appointment Booking Card.
 
 ---
 
-### 2. Diagnostic Summary Card & Correlation Dashboard
-Displays circular likelihood percentage progress gauges ($88\%$, $75\%$, $45\%$), matching symptom overlap badges, recommended specialist chips, and telehealth booking CTAs.
+## 🎨 2. Visual UI Design Portfolio Gallery (7 Designs)
 
-![Diagnostic Summary Dashboard Design](assets/diagnostic_dashboard_design.jpg)
+### Design 1: Clinical Symptom Correlation Matrix & Heatmap
+![Clinical Symptom Correlation Matrix UI](assets/design_1_correlation_matrix.jpg)
+
+### Design 2: Specialist Referral Network & Provider Map
+![Specialist Referral Network UI](assets/design_2_specialist_network.jpg)
+
+### Design 3: Patient Triage & Emergency Severity Dashboard
+![Patient Triage Severity Dashboard UI](assets/design_3_triage_analytics.jpg)
+
+### Design 4: Differential Diagnosis Comparison Board
+![Differential Diagnosis Comparison Board UI](assets/design_4_differential_comparison.jpg)
+
+### Design 5: Patient EHR Telehealth Consultation Summary Report
+![Patient EHR Telehealth Consultation Report UI](assets/design_5_patient_ehr_report.jpg)
+
+### Design 6: Mobile Smartphone Symptom Checker UI
+![Mobile Symptom Checker UI](assets/mobile_ui_design.jpg)
+
+### Design 7: Diagnostic Summary Card & Likelihood Gauge
+![Diagnostic Card Dashboard UI](assets/diagnostic_dashboard_design.jpg)
 
 ---
 
@@ -29,14 +52,13 @@ Displays circular likelihood percentage progress gauges ($88\%$, $75\%$, $45\%$)
 
 ---
 
-## ✨ Design Architecture & Features
+## ✨ Features & Architecture
 
-- **🔍 Dual Symptom Entry**: Auto-complete fuzzy search across 655+ symptoms + Anatomical Body Area Selector Map (Head, Chest, Abdomen, Limbs, Skin).
-- **📊 Disease Likelihood Percentage Engine**: Weighted coverage formula calculating probability scores (High $\ge 75\%$, Moderate $45-74\%$, Low $<45\%$).
-- **👨‍⚕️ Specialist Recommendation Hierarchy**: Direct mapping of specialists (`Cardiologist`, `Endocrinologist`, `Neurologist`, `Pulmonologist`, etc.).
-- **📊 Dual Presentation Modes**: Switch between Diagnostic Card View and Differential Comparison Matrix Table.
-- **🎨 3 Design Systems Included**: Toggle between **Deep Slate Dark**, **Clinical Light Teal**, and **High Contrast Accessibility** themes.
-- **♿ WCAG 2.1 AA Compliant**: High contrast colors ($9.4:1$), 48px touch targets, keyboard `:focus-visible` outlines, and ARIA screen reader support.
+- **🔍 Dual Symptom Entry**: Auto-complete search across 655+ symptoms + Anatomical Body Area Map.
+- **📊 Disease Likelihood Percentage Engine**: Weighted Jaccard coverage formula ($75\%+$ High, $45-74\%$ Moderate, $<45\%$ Low).
+- **👨‍⚕️ Specialist Recommendation Hierarchy**: Direct mapping of specialists (`Cardiologist`, `Endocrinologist`, `Neurologist`, `Pulmonologist`).
+- **📈 Dataset Analytics Suite**: Interactive charts analyzing specialist frequencies, symptom occurrences, and searchable dataset explorer table.
+- **🎨 3 Design Systems Included**: Toggle between **Dark Slate**, **Clinical Light Teal**, and **High Contrast (WCAG AAA)** themes.
 
 ---
 
@@ -46,12 +68,11 @@ $$\text{Likelihood \%} = \left( \frac{|\text{Selected Symptoms} \cap \text{Disea
 
 ---
 
-## 📄 Project Files & UX Specification
+## 📄 Project Files & Documentation
 
 - 🌐 **Live Web Application Demo:** [https://daspriti.github.io/symptom-checker-portfolio/](https://daspriti.github.io/symptom-checker-portfolio/)
 - 🎨 **Lead Healthcare UX Design Spec:** [UX_DESIGN_SPECIFICATION.md](UX_DESIGN_SPECIFICATION.md)
-- 🖼️ **Visual UI Assets:** [`assets/mobile_ui_design.jpg`](assets/mobile_ui_design.jpg) & [`assets/diagnostic_dashboard_design.jpg`](assets/diagnostic_dashboard_design.jpg)
-- 📊 **Source Code:** [`index.html`](index.html), [`style.css`](style.css), [`app.js`](app.js), [`data.js`](data.js)
+- 🖼️ **Visual UI Assets:** [`assets/tableau_dashboard_design.jpg`](assets/tableau_dashboard_design.jpg), [`assets/design_1_correlation_matrix.jpg`](assets/design_1_correlation_matrix.jpg), [`assets/design_2_specialist_network.jpg`](assets/design_2_specialist_network.jpg), [`assets/design_3_triage_analytics.jpg`](assets/design_3_triage_analytics.jpg), [`assets/design_4_differential_comparison.jpg`](assets/design_4_differential_comparison.jpg), [`assets/design_5_patient_ehr_report.jpg`](assets/design_5_patient_ehr_report.jpg), [`assets/mobile_ui_design.jpg`](assets/mobile_ui_design.jpg), [`assets/diagnostic_dashboard_design.jpg`](assets/diagnostic_dashboard_design.jpg)
 
 ---
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="MediGraph - Mobile-First Symptom Checker, Disease Likelihood Percentage Estimator & Medical Dataset Analytics Dashboard">
-  <title>MediGraph - Medical Symptom Checker, Dataset Dashboard & UX Portfolio</title>
+  <title>MediGraph - Medical Symptom Checker, Tableau Dashboard & UX Portfolio</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
       <div class="brand-icon" aria-hidden="true">+</div>
       <div>
         <h1>MediGraph Clinical Suite</h1>
-        <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500;">Disease Likelihood, Analytics Dashboard & UX Portfolio</div>
+        <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500;">Disease Likelihood, Tableau Dashboard & UX Portfolio</div>
       </div>
     </div>
 
@@ -36,7 +36,7 @@
         🖥️ Desktop View
       </button>
       <button id="spec-toggle-btn" class="btn-toggle" aria-label="Toggle Tableau Dashboard Layout Specification">
-        📊 View UX Spec
+        📊 View Tableau/UX Spec
       </button>
     </div>
   </header>
@@ -47,7 +47,7 @@
       
       <!-- Status & Emergency Bar -->
       <div class="app-status-bar">
-        <span>MediGraph Suite v4.0</span>
+        <span>MediGraph Suite v4.2</span>
         <span>WCAG 2.1 AA Compliant</span>
       </div>
 
@@ -226,28 +226,60 @@
           </div>
         </section>
 
-        <!-- VISUAL UI DESIGN SHOWCASE GALLERY (7 UI DESIGNS) -->
+        <!-- TABLEAU DASHBOARD SPECIFICATION & VISUAL SHOWCASE -->
         <section class="widget-card" style="margin-top: 20px;">
-          <h2 class="widget-title">🎨 Visual UI Design Showcase & Portfolio Gallery (7 Designs)</h2>
-          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 14px;">Explore all 7 high-fidelity healthcare UX visual designs and UI screens included in this portfolio project.</p>
+          <h2 class="widget-title">📈 Tableau Desktop Dashboard Layout & Visual Design Spec</h2>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 14px;">Interactive Tableau Desktop analytics dashboard layout mapping disease correlation treemaps, symptom filters, patient triage parameters, and specialist provider maps.</p>
+          
+          <div style="background: var(--color-surface-elevated); padding: 16px; border-radius: 8px; border: 1px solid var(--color-border);">
+            <h4 style="font-size: 0.95rem; color: var(--color-primary); margin-bottom: 10px;">Tableau Desktop Interface Layout (1440x900 Grid)</h4>
+            <img src="assets/tableau_dashboard_design.jpg" alt="Tableau Dashboard Layout Visual Design" style="width: 100%; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); margin-bottom: 14px;">
+            
+            <div class="spec-grid" style="margin-top: 10px;">
+              <div style="font-size: 0.8125rem; color: var(--color-text-body);">
+                <strong style="color: var(--color-primary);">Top Container:</strong> Patient Triage & Severity Filter Parameter Bar (Height: 80px).
+              </div>
+              <div style="font-size: 0.8125rem; color: var(--color-text-body);">
+                <strong style="color: var(--color-primary);">Left Container:</strong> Interactive Symptom Multi-Select Filter Pane (Width: 360px).
+              </div>
+              <div style="font-size: 0.8125rem; color: var(--color-text-body);">
+                <strong style="color: var(--color-primary);">Center Container:</strong> Disease Correlation & Severity Treemap Heatmap.
+              </div>
+              <div style="font-size: 0.8125rem; color: var(--color-text-body);">
+                <strong style="color: var(--color-primary);">Right Container:</strong> Specialist Referral Availability Map & Provider List.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VISUAL UI DESIGN SHOWCASE GALLERY (8 DESIGNS) -->
+        <section class="widget-card" style="margin-top: 20px;">
+          <h2 class="widget-title">🎨 Visual UI Design Gallery (8 Complete Designs)</h2>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 14px;">Explore all 8 high-fidelity healthcare UX visual designs and UI screens included in this portfolio project.</p>
           
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
             
+            <!-- Design Tableau -->
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Tableau Dashboard Desktop Specification UI</h4>
+              <img src="assets/tableau_dashboard_design.jpg" alt="Tableau Dashboard UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            </div>
+
             <!-- Design 1 -->
             <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 1: Clinical Symptom Correlation Matrix & Heatmap</h4>
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 1: Clinical Symptom Correlation Matrix</h4>
               <img src="assets/design_1_correlation_matrix.jpg" alt="Clinical Symptom Correlation Matrix UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
             <!-- Design 2 -->
             <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 2: Specialist Referral Network & Provider Map</h4>
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 2: Specialist Referral Network Map</h4>
               <img src="assets/design_2_specialist_network.jpg" alt="Specialist Referral Network UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
             <!-- Design 3 -->
             <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 3: Patient Triage & Emergency Severity Dashboard</h4>
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 3: Patient Triage & Emergency Severity</h4>
               <img src="assets/design_3_triage_analytics.jpg" alt="Patient Triage Severity Dashboard UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
@@ -259,19 +291,19 @@
 
             <!-- Design 5 -->
             <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 5: Patient Telehealth EHR Consultation Summary</h4>
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 5: Patient Telehealth Consultation Report</h4>
               <img src="assets/design_5_patient_ehr_report.jpg" alt="Patient EHR Telehealth Consultation Report UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
             <!-- Design 6 -->
             <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 6: Mobile Smartphone Symptom Checker UI</h4>
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 6: Mobile Smartphone Symptom Checker</h4>
               <img src="assets/mobile_ui_design.jpg" alt="Mobile Symptom Checker UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
             <!-- Design 7 -->
             <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 7: Diagnostic Summary Card & Correlation Meter</h4>
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 7: Diagnostic Summary Card & Correlation Gauge</h4>
               <img src="assets/diagnostic_dashboard_design.jpg" alt="Diagnostic Card Dashboard UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
@@ -322,7 +354,7 @@
               <ul>
                 <li><strong>Top Banner:</strong> Emergency Triage Alert Banner & Patient Profile Filter.</li>
                 <li><strong>Left Pane (350px):</strong> Interactive Symptom Selector Extension.</li>
-                <li><strong>Center Matrix:</strong> Differential Diagnosis Heatmap (Correlation Score vs Severity).</li>
+                <li><strong>Center Matrix:</strong> Disease Correlation & Severity Treemap Heatmap.</li>
                 <li><strong>Right Pane (300px):</strong> Specialist Referral Network Map & Appointment Booking Card.</li>
               </ul>
             </div>
