@@ -1,4 +1,4 @@
-// Symptom Checker Application Logic & Disease Likelihood Engine - MediGraph v3.2
+// Symptom Checker Application Logic, Disease Likelihood & Dataset Analytics Engine - MediGraph v4.0
 
 document.addEventListener('DOMContentLoaded', () => {
   // Application State
@@ -37,12 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const diagnosticResultsContainer = document.getElementById('diagnostic-results');
   const resultsCountEl = document.getElementById('results-count');
 
-  // Mode Toggles & Buttons
+  // Navigation Toggles
   const themeSelect = document.getElementById('theme-select');
+  const analyticsToggleBtn = document.getElementById('analytics-toggle-btn');
   const layoutToggleBtn = document.getElementById('layout-toggle-btn');
   const specToggleBtn = document.getElementById('spec-toggle-btn');
   const layoutWrapper = document.getElementById('layout-wrapper');
   const tableauSpecView = document.getElementById('tableau-spec-view');
+  const datasetAnalyticsView = document.getElementById('dataset-analytics-view');
   const clearAllBtn = document.getElementById('clear-all-btn');
 
   // View Mode Toggles
@@ -60,6 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeModalBtn = document.getElementById('close-modal-btn');
   const modalSummaryBox = document.getElementById('modal-summary-box');
   const bookingForm = document.getElementById('booking-form');
+
+  // Dataset Table Explorer Search Input
+  const tableSearchInput = document.getElementById('table-search-input');
+  const datasetTableBody = document.getElementById('dataset-table-body');
 
   // Initialize Quick Chips & Region Chips
   function renderQuickChips() {
@@ -396,7 +402,94 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Telehealth Booking Modal Logic
+  // RENDER DATASET ANALYTICS DASHBOARD
+  function renderDatasetAnalytics() {
+    const chartSpecialists = document.getElementById('chart-specialists');
+    const chartSymptoms = document.getElementById('chart-symptoms');
+
+    // 1. Calculate Specialist Counts
+    const specCounts = {};
+    const symCounts = {};
+
+    MEDICAL_DATASET.forEach(item => {
+      item.specialists.forEach(s => {
+        specCounts[s] = (specCounts[s] || 0) + 1;
+      });
+      item.symptoms.forEach(s => {
+        symCounts[s] = (symCounts[s] || 0) + 1;
+      });
+    });
+
+    const topSpecialists = Object.entries(specCounts).sort((a, b) => b[1] - a[1]).slice(0, 7);
+    const topSymptoms = Object.entries(symCounts).sort((a, b) => b[1] - a[1]).slice(0, 7);
+
+    // Render Specialist Chart
+    chartSpecialists.innerHTML = '';
+    const maxSpec = topSpecialists[0] ? topSpecialists[0][1] : 1;
+    topSpecialists.forEach(([spec, count]) => {
+      const pct = Math.round((count / maxSpec) * 100);
+      const row = document.createElement('div');
+      row.innerHTML = `
+        <div style="display: flex; justify-content: space-between; font-size: 0.8125rem; margin-bottom: 2px;">
+          <span>👨‍⚕️ ${spec}</span>
+          <span style="font-weight: 700; color: var(--color-primary);">${count} diseases</span>
+        </div>
+        <div class="progress-track" style="height: 6px;">
+          <div class="progress-fill high" style="width: ${pct}%;"></div>
+        </div>
+      `;
+      chartSpecialists.appendChild(row);
+    });
+
+    // Render Symptom Frequency Chart
+    chartSymptoms.innerHTML = '';
+    const maxSym = topSymptoms[0] ? topSymptoms[0][1] : 1;
+    topSymptoms.forEach(([sym, count]) => {
+      const pct = Math.round((count / maxSym) * 100);
+      const row = document.createElement('div');
+      row.innerHTML = `
+        <div style="display: flex; justify-content: space-between; font-size: 0.8125rem; margin-bottom: 2px;">
+          <span>🔥 ${sym}</span>
+          <span style="font-weight: 700; color: #10B981;">${count} diseases</span>
+        </div>
+        <div class="progress-track" style="height: 6px;">
+          <div class="progress-fill medium" style="width: ${pct}%;"></div>
+        </div>
+      `;
+      chartSymptoms.appendChild(row);
+    });
+
+    renderDatasetTable();
+  }
+
+  // Render Searchable Dataset Table
+  function renderDatasetTable(query = '') {
+    datasetTableBody.innerHTML = '';
+    const filtered = MEDICAL_DATASET.filter(item => {
+      if (!query) return true;
+      const q = query.toLowerCase();
+      return item.disease.toLowerCase().includes(q) || 
+             item.specialists.some(sp => sp.toLowerCase().includes(q)) ||
+             item.symptoms.some(sy => sy.toLowerCase().includes(q));
+    });
+
+    filtered.forEach(item => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight: 700; text-transform: capitalize; color: var(--color-text-title);">${item.disease}</td>
+        <td>${item.specialists.map(sp => `<span class="specialist-chip" style="font-size: 0.75rem; margin: 2px;">${sp}</span>`).join('')}</td>
+        <td style="font-weight: 700; color: var(--color-primary); text-align: center;">${item.symptoms.length}</td>
+        <td style="font-size: 0.75rem; color: var(--color-text-muted);">${item.symptoms.slice(0, 4).join(', ')}...</td>
+      `;
+      datasetTableBody.appendChild(tr);
+    });
+  }
+
+  tableSearchInput.addEventListener('input', (e) => {
+    renderDatasetTable(e.target.value.trim());
+  });
+
+  // Modal Logic
   function openBookingModal(disease, score, specialist) {
     modalSummaryBox.innerHTML = `
       <div style="font-weight: 700; color: var(--color-text-title); text-transform: capitalize; font-size: 1.05rem;">
@@ -470,6 +563,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.setAttribute('data-theme', state.theme);
   });
 
+  analyticsToggleBtn.addEventListener('click', () => {
+    const isActive = datasetAnalyticsView.classList.toggle('active');
+    analyticsToggleBtn.innerHTML = isActive ? '📈 Hide Dataset Dashboard' : '📈 Dataset Dashboard';
+    if (isActive) renderDatasetAnalytics();
+  });
+
+  layoutToggleBtn.addEventListener('click', () => {
+    state.viewMode = state.viewMode === 'device' ? 'desktop' : 'device';
+    if (state.viewMode === 'desktop') {
+      layoutWrapper.className = 'layout-wrapper desktop-mode';
+      layoutToggleBtn.innerHTML = '📱 Mobile View';
+    } else {
+      layoutWrapper.className = 'layout-wrapper device-frame-mode';
+      layoutToggleBtn.innerHTML = '🖥️ Desktop View';
+    }
+  });
+
+  specToggleBtn.addEventListener('click', () => {
+    const isActive = tableauSpecView.classList.toggle('active');
+    specToggleBtn.innerHTML = isActive ? '📊 Hide UX Spec' : '📊 View UX Spec';
+  });
+
   // Update Full UI
   function updateUI() {
     renderQuickChips();
@@ -490,22 +605,6 @@ document.addEventListener('DOMContentLoaded', () => {
   clearAllBtn.addEventListener('click', () => {
     state.selectedSymptoms = [];
     updateUI();
-  });
-
-  layoutToggleBtn.addEventListener('click', () => {
-    state.viewMode = state.viewMode === 'device' ? 'desktop' : 'device';
-    if (state.viewMode === 'desktop') {
-      layoutWrapper.className = 'layout-wrapper desktop-mode';
-      layoutToggleBtn.innerHTML = '📱 Mobile View';
-    } else {
-      layoutWrapper.className = 'layout-wrapper device-frame-mode';
-      layoutToggleBtn.innerHTML = '🖥️ Desktop View';
-    }
-  });
-
-  specToggleBtn.addEventListener('click', () => {
-    const isActive = tableauSpecView.classList.toggle('active');
-    specToggleBtn.innerHTML = isActive ? '📊 Hide UX Spec' : '📊 View UX Spec';
   });
 
   // Initial Render

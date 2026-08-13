@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MediGraph - Mobile-First Symptom Checker, Disease Likelihood Percentage Estimator & Specialist Recommendation Engine">
-  <title>MediGraph - Medical Symptom Checker & Disease Likelihood UI</title>
+  <meta name="description" content="MediGraph - Mobile-First Symptom Checker, Disease Likelihood Percentage Estimator & Medical Dataset Analytics Dashboard">
+  <title>MediGraph - Medical Symptom Checker, Dataset Dashboard & UX Portfolio</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,8 +17,8 @@
     <div class="brand-title">
       <div class="brand-icon" aria-hidden="true">+</div>
       <div>
-        <h1>MediGraph UX Engine</h1>
-        <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500;">Disease Likelihood & Specialist Referral System</div>
+        <h1>MediGraph Clinical Suite</h1>
+        <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500;">Disease Likelihood, Analytics Dashboard & UX Portfolio</div>
       </div>
     </div>
 
@@ -29,6 +29,9 @@
         <option value="high-contrast">👁️ High Contrast (WCAG AAA)</option>
       </select>
 
+      <button id="analytics-toggle-btn" class="btn-toggle" aria-label="Toggle Dataset Analytics Dashboard">
+        📈 Dataset Dashboard
+      </button>
       <button id="layout-toggle-btn" class="btn-toggle" aria-label="Toggle mobile frame or expanded desktop layout">
         🖥️ Desktop View
       </button>
@@ -44,7 +47,7 @@
       
       <!-- Status & Emergency Bar -->
       <div class="app-status-bar">
-        <span>MediGraph Clinical v3.2</span>
+        <span>MediGraph Suite v4.0</span>
         <span>WCAG 2.1 AA Compliant</span>
       </div>
 
@@ -157,19 +160,121 @@
           <div id="diagnostic-results" style="margin-top: 14px;" aria-live="polite"></div>
         </section>
 
-        <!-- Visual UI Design Gallery Showcase Section -->
+        <!-- DATASET ANALYTICS DASHBOARD OVERLAY -->
+        <section id="dataset-analytics-view" class="tableau-spec-view" aria-label="Medical Dataset Analytics Dashboard">
+          <h2 class="widget-title">📈 Medical Dataset Analytics Dashboard</h2>
+          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 16px;">
+            Clinical data analysis across 50 medical conditions, 655 symptoms, and 80+ specialist physician disciplines.
+          </p>
+
+          <!-- KPI Metric Cards Row -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px;">
+            <div class="spec-box" style="text-align: center;">
+              <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Total Conditions</div>
+              <div style="font-size: 2rem; font-weight: 800; color: var(--color-primary);">50</div>
+              <div style="font-size: 0.75rem; color: var(--color-text-muted);">Unique Diseases</div>
+            </div>
+            <div class="spec-box" style="text-align: center;">
+              <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Total Symptoms</div>
+              <div style="font-size: 2rem; font-weight: 800; color: #10B981;">655</div>
+              <div style="font-size: 0.75rem; color: var(--color-text-muted);">Clinical Signs Mapped</div>
+            </div>
+            <div class="spec-box" style="text-align: center;">
+              <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Specialist Roles</div>
+              <div style="font-size: 2rem; font-weight: 800; color: #F59E0B;">80+</div>
+              <div style="font-size: 0.75rem; color: var(--color-text-muted);">Medical Specialties</div>
+            </div>
+            <div class="spec-box" style="text-align: center;">
+              <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Avg Symptoms/Disease</div>
+              <div style="font-size: 2rem; font-weight: 800; color: #3B82F6;">28.4</div>
+              <div style="font-size: 0.75rem; color: var(--color-text-muted);">Clinical Indicators</div>
+            </div>
+          </div>
+
+          <!-- Dataset Visual Charts Grid -->
+          <div class="spec-grid">
+            <div class="spec-box">
+              <h4>👨‍⚕️ Top Specialist Frequency in Dataset</h4>
+              <div id="chart-specialists" style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+
+            <div class="spec-box">
+              <h4>🔥 Top Symptom Occurrences Across Diseases</h4>
+              <div id="chart-symptoms" style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+          </div>
+
+          <!-- Searchable Dataset Table Explorer -->
+          <div style="margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+              <h4 style="font-size: 1rem; color: var(--color-text-title);">🔍 Dataset Table Explorer</h4>
+              <input type="text" id="table-search-input" placeholder="Search disease or symptom in dataset..." class="symptom-input" style="background: var(--color-surface-elevated); padding: 6px 12px; border: 1px solid var(--color-border); border-radius: 6px; width: 280px; font-size: 0.8125rem;">
+            </div>
+            <div class="matrix-table-container" style="max-height: 360px; overflow-y: auto;">
+              <table class="matrix-table">
+                <thead>
+                  <tr>
+                    <th>Disease Name</th>
+                    <th>Primary Specialists</th>
+                    <th>Associated Symptoms Count</th>
+                    <th>Top Characteristic Symptoms</th>
+                  </tr>
+                </thead>
+                <tbody id="dataset-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- VISUAL UI DESIGN SHOWCASE GALLERY (7 UI DESIGNS) -->
         <section class="widget-card" style="margin-top: 20px;">
-          <h2 class="widget-title">🎨 Visual UI Design Showcase & Screenshots</h2>
-          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 14px;">High-resolution visual mockups of the mobile interface & diagnostic correlation summary card.</p>
+          <h2 class="widget-title">🎨 Visual UI Design Showcase & Portfolio Gallery (7 Designs)</h2>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 14px;">Explore all 7 high-fidelity healthcare UX visual designs and UI screens included in this portfolio project.</p>
+          
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            
+            <!-- Design 1 -->
             <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">1. Mobile Smartphone UI Layout</h4>
-              <img src="assets/mobile_ui_design.jpg" alt="Mobile Symptom Checker UI Mockup" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 1: Clinical Symptom Correlation Matrix & Heatmap</h4>
+              <img src="assets/design_1_correlation_matrix.jpg" alt="Clinical Symptom Correlation Matrix UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
+
+            <!-- Design 2 -->
             <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">2. Diagnostic Summary & Correlation Card</h4>
-              <img src="assets/diagnostic_dashboard_design.jpg" alt="Diagnostic Card Dashboard UI Mockup" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 2: Specialist Referral Network & Provider Map</h4>
+              <img src="assets/design_2_specialist_network.jpg" alt="Specialist Referral Network UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
+
+            <!-- Design 3 -->
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 3: Patient Triage & Emergency Severity Dashboard</h4>
+              <img src="assets/design_3_triage_analytics.jpg" alt="Patient Triage Severity Dashboard UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            </div>
+
+            <!-- Design 4 -->
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 4: Differential Diagnosis Comparison Board</h4>
+              <img src="assets/design_4_differential_comparison.jpg" alt="Differential Diagnosis Comparison Board UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            </div>
+
+            <!-- Design 5 -->
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 5: Patient Telehealth EHR Consultation Summary</h4>
+              <img src="assets/design_5_patient_ehr_report.jpg" alt="Patient EHR Telehealth Consultation Report UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            </div>
+
+            <!-- Design 6 -->
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 6: Mobile Smartphone Symptom Checker UI</h4>
+              <img src="assets/mobile_ui_design.jpg" alt="Mobile Symptom Checker UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            </div>
+
+            <!-- Design 7 -->
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">Design 7: Diagnostic Summary Card & Correlation Meter</h4>
+              <img src="assets/diagnostic_dashboard_design.jpg" alt="Diagnostic Card Dashboard UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            </div>
+
           </div>
         </section>
 

@@ -1,4 +1,4 @@
-# 🩺 Lead Healthcare UX/UI Design Specification & Architecture v3.0
+# 🩺 Lead Healthcare UX/UI Design Specification & Architecture v4.0
 
 **Project:** Medical Graph Symptom-to-Disease & Specialist Mapping Application  
 **Role:** Lead Healthcare UX/UI Designer  
@@ -8,78 +8,44 @@
 
 ---
 
-## 1. Executive UX Strategy & Patient-Centered Ergonomics
+## 🎨 Visual Design Portfolio Gallery (7 Designs)
 
-Healthcare digital products operate under unique emotional and clinical constraints. Users accessing a symptom checker are frequently experiencing acute distress, anxiety, or physical discomfort. The primary UX goals are **reducing cognitive load**, **establishing immediate clinical trust**, **calculating explicit disease likelihood percentages**, and **delivering zero-friction specialist referral paths**.
+This portfolio project includes **7 distinct visual UI design screens and clinical dashboard architectures**:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    HEALTHCARE UX TRIAGE FLOW                │
-└─────────────────────────────────────────────────────────────┘
-   [ Emergency Banner Alert (Red High-Contrast Top Sticky) ]
-                             │
-                             ▼
-   [ Step 1: Symptom Selector ] ──► Auto-complete OR Anatomical Body Map
-                             │
-                             ▼
-   [ Step 2: Diagnostic Match ] ──► Disease Likelihood Percentage Gauges
-                             │
-                             ▼
-   [ Step 3: Specialist Consult ] ──► Ranked Specialist Badges & Telehealth Booking
-```
+| Design | Screen / Interface Name | Key UX & Visual Highlights |
+| :--- | :--- | :--- |
+| **Design 1** | **Clinical Symptom Correlation Matrix & Heatmap** | Interactive correlation density heatmap matrix mapping disease rows vs symptom columns with emerald-to-cyan heat intensity gradients. |
+| **Design 2** | **Specialist Referral Network & Provider Map** | Network node graph linking medical specialties (`Cardiologist`, `Endocrinologist`, `Neurologist`) with provider wait-time cards and booking CTAs. |
+| **Design 3** | **Patient Triage & Emergency Severity Dashboard** | Executive clinical dashboard featuring severity donut charts (Emergency vs Urgent vs Routine), active alert logs, and response velocity gauges. |
+| **Design 4** | **Differential Diagnosis Comparison Board** | Multi-column side-by-side comparison board allowing clinicians to contrast 3 conditions, matching symptom checkmarks, and specialist badges. |
+| **Design 5** | **Patient EHR Telehealth Consultation Report** | Digital clinical consultation summary document with patient demographics, symptom history, likelihood percentages, and digital physician signature. |
+| **Design 6** | **Mobile Smartphone Symptom Checker UI** | Mobile-first smartphone interface with emergency triage banner, auto-complete search widget, tag pills, and likelihood cards. |
+| **Design 7** | **Diagnostic Summary Card & Percentage Gauge** | Card view featuring circular percentage progress gauges ($88\%$, $75\%$, $45\%$), matched vs unmatched symptom pills, and specialist chips. |
 
 ---
 
-## 2. Anatomical Selector & Dual Symptom Entry Modes
+## 📈 Medical Dataset Analytics Dashboard
 
-To accommodate both medical-literate users and patients describing vague physical sensations, the UX provides dual entry pathways:
+The application features a built-in Dataset Analytics Dashboard analyzing the underlying medical graph dataset:
+- **50 Unique Disease Conditions**
+- **655 Clinical Symptoms Mapped**
+- **80+ Medical Specialist Roles**
+- **28.4 Average Symptoms per Disease**
 
-1. **Auto-Complete Search Bar**: Substring fuzzy search across 655 clinical symptoms with real-time term highlighting (`<mark>`) and keyboard navigation (`ArrowUp/Down/Enter/Escape`).
-2. **Anatomical Body Region Selector**: Visually categorized body regions:
-   - 🧠 **Head & Neurological**: Headache, dizziness, vision changes, seizures, facial pain.
-   - 🫁 **Chest & Respiratory**: Chest pain, shortness of breath, cough, palpitations, wheezing.
-   - 🩺 **Abdomen & Digestive**: Sharp abdominal pain, nausea, vomiting, diarrhea, bloating.
-   - 🦴 **Joints & Limbs**: Joint pain, knee pain, back pain, leg pain, swelling.
-   - 🔥 **Skin & General**: Fever, fatigue, chills, skin rash, sweating.
+### Data Analytics Visualizations:
+1. **Specialist Distribution Bar Chart**: Ranks specialist frequency (`Cardiologist`, `Endocrinologist`, `Neurologist`, `Pulmonologist`, `Gastroenterologist`, etc.).
+2. **Symptom Occurrence Frequency Chart**: Identifies top clinical indicators across the dataset (`chest pain`, `shortness of breath`, `fever`, `cough`, `dizziness`, `fatigue`, `nausea`).
+3. **Searchable Dataset Explorer Table**: Live search and filter table allowing users to explore all 50 diseases, assigned specialists, symptom counts, and characteristic signs.
 
 ---
 
-## 3. Disease Likelihood Percentage Calculation Engine
-
-To determine diagnostic rank, the engine calculates a weighted Jaccard & Coverage Index:
+## 🧮 Disease Likelihood Percentage Formula
 
 $$\text{Likelihood \%} = \left( \frac{|\text{Selected Symptoms} \cap \text{Disease Symptoms}|}{|\text{Disease Symptoms}|} \times 0.65 + \frac{|\text{Selected Symptoms} \cap \text{Disease Symptoms}|}{|\text{Selected Symptoms}|} \times 0.35 \right) \times 100\%$$
 
-### Visual Score Gauge & Triage Matrix
-
-| Correlation Range | Visual Gauge Color | Contrast Token | Clinical Triage Level |
-| :--- | :--- | :--- | :--- |
-| **75% – 100%** | Emerald Circle Gauge (`#10B981`) | 7.2:1 | 🚨 High Likelihood / Emergency Triage |
-| **45% – 74%** | Amber Circle Gauge (`#F59E0B`) | 5.8:1 | ⚠️ Moderate Likelihood / Specialist Consult |
-| **15% – 44%** | Slate Circle Gauge (`#94A3B8`) | 4.9:1 | ℹ️ Low Likelihood / Primary Care |
-
 ---
 
-## 4. Dual View Modes: Card View vs Differential Matrix View
-
-Users can seamlessly toggle between two distinct clinical presentation modes:
-
-1. **Diagnostic Card View**: High-contrast card featuring a circular percentage gauge, severity badge, matched vs unmatched symptom breakdown, recommended specialist chips, and telehealth booking CTA.
-2. **Differential Comparison Matrix**: A side-by-side comparison table contrasting condition likelihood percentages, matched symptom overlap, assigned specialist type, and direct booking actions.
-
----
-
-## 5. Telehealth Consultation & Specialist Booking Modal Flow
-
-Clicking **"Book Specialist Consult"** triggers a pre-filled clinical referral modal containing:
-- Selected Patient Symptoms
-- Target Disease Condition & Calculated Likelihood Percentage
-- Mapped Specialist Type (`Cardiologist`, `Endocrinologist`, `Neurologist`, etc.)
-- Preferred Date Picker & Confirmation Action
-
----
-
-## 6. Accessibility Audit & Compliance Matrix (WCAG 2.1 AA)
+## ♿ WCAG 2.1 AA Accessibility Audit Matrix
 
 | Requirement | WCAG Guideline | Implementation Detail |
 | :--- | :--- | :--- |
