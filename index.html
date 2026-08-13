@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MediGraph by Priti Das - Mobile-First Symptom Checker, Tableau & Power BI Dashboard Analytics">
-  <title>MediGraph - Medical Symptom Checker & Analytics Portfolio by Priti Das</title>
+  <meta name="description" content="MediGraph by Priti Das - Mobile-First Medical Symptom Checker & Specialist Recommendation Engine">
+  <title>MediGraph - Medical Symptom Checker UI by Priti Das</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
       <div class="brand-icon" aria-hidden="true">+</div>
       <div>
         <h1>MediGraph Clinical Suite</h1>
-        <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500;">Portfolio Author: Priti Das | Healthcare Analytics & UX Lead</div>
+        <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500;">Lead Healthcare UX Design Portfolio | Priti Das</div>
       </div>
     </div>
 
@@ -29,25 +29,19 @@
         <option value="high-contrast">👁️ High Contrast (WCAG AAA)</option>
       </select>
 
-      <button id="analytics-toggle-btn" class="btn-toggle" aria-label="Toggle Dataset Analytics Dashboard">
-        📈 Dataset Dashboard
-      </button>
       <button id="layout-toggle-btn" class="btn-toggle" aria-label="Toggle mobile frame or expanded desktop layout">
         🖥️ Desktop View
-      </button>
-      <button id="spec-toggle-btn" class="btn-toggle" aria-label="Toggle Tableau Dashboard Layout Specification">
-        📊 View UX Spec
       </button>
     </div>
   </header>
 
-  <!-- Main Layout Wrapper (Device Shell or Desktop Mode) -->
+  <!-- Main Layout Wrapper -->
   <main id="layout-wrapper" class="layout-wrapper device-frame-mode">
     <div class="mobile-container">
       
       <!-- Status & Emergency Bar -->
       <div class="app-status-bar">
-        <span>Priti Das Portfolio v4.5</span>
+        <span>MediGraph Mobile</span>
         <span>WCAG 2.1 AA Compliant</span>
       </div>
 
@@ -55,7 +49,7 @@
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
         </svg>
-        <span>If experiencing severe chest pain, stroke signs, or extreme distress, call 911 immediately.</span>
+        <span>If experiencing severe chest pain or stroke symptoms, call 911 immediately.</span>
       </div>
 
       <div class="app-content">
@@ -68,7 +62,7 @@
           </div>
           <div class="step-item active">
             <div class="step-number">2</div>
-            <div class="step-label">Disease Likelihood %</div>
+            <div class="step-label">Disease Matches %</div>
           </div>
           <div class="step-item active">
             <div class="step-number">3</div>
@@ -83,7 +77,7 @@
               <svg width="20" height="20" fill="none" stroke="var(--color-primary)" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
-              Symptom Entry & Anatomical Selector
+              Symptom Selector
             </h2>
           </div>
 
@@ -160,137 +154,30 @@
           <div id="diagnostic-results" style="margin-top: 14px;" aria-live="polite"></div>
         </section>
 
-        <!-- DATASET ANALYTICS DASHBOARD OVERLAY -->
-        <section id="dataset-analytics-view" class="tableau-spec-view" aria-label="Medical Dataset Analytics Dashboard">
-          <h2 class="widget-title">📈 Medical Dataset Analytics Dashboard</h2>
-          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 16px;">
-            Clinical data analysis across 50 medical conditions, 655 symptoms, and 80+ specialist physician disciplines.
-          </p>
-
-          <!-- KPI Metric Cards Row -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px;">
-            <div class="spec-box" style="text-align: center;">
-              <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Total Conditions</div>
-              <div style="font-size: 2rem; font-weight: 800; color: var(--color-primary);">50</div>
-              <div style="font-size: 0.75rem; color: var(--color-text-muted);">Unique Diseases</div>
-            </div>
-            <div class="spec-box" style="text-align: center;">
-              <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Total Symptoms</div>
-              <div style="font-size: 2rem; font-weight: 800; color: #10B981;">655</div>
-              <div style="font-size: 0.75rem; color: var(--color-text-muted);">Clinical Signs Mapped</div>
-            </div>
-            <div class="spec-box" style="text-align: center;">
-              <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Specialist Roles</div>
-              <div style="font-size: 2rem; font-weight: 800; color: #F59E0B;">80+</div>
-              <div style="font-size: 0.75rem; color: var(--color-text-muted);">Medical Specialties</div>
-            </div>
-            <div class="spec-box" style="text-align: center;">
-              <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Avg Symptoms/Disease</div>
-              <div style="font-size: 2rem; font-weight: 800; color: #3B82F6;">28.4</div>
-              <div style="font-size: 0.75rem; color: var(--color-text-muted);">Clinical Indicators</div>
-            </div>
-          </div>
-
-          <!-- Dataset Visual Charts Grid -->
-          <div class="spec-grid">
-            <div class="spec-box">
-              <h4>👨‍⚕️ Top Specialist Frequency in Dataset</h4>
-              <div id="chart-specialists" style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
-            </div>
-
-            <div class="spec-box">
-              <h4>🔥 Top Symptom Occurrences Across Diseases</h4>
-              <div id="chart-symptoms" style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
-            </div>
-          </div>
-
-          <!-- Searchable Dataset Table Explorer -->
-          <div style="margin-top: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-              <h4 style="font-size: 1rem; color: var(--color-text-title);">🔍 Dataset Table Explorer</h4>
-              <input type="text" id="table-search-input" placeholder="Search disease or symptom in dataset..." class="symptom-input" style="background: var(--color-surface-elevated); padding: 6px 12px; border: 1px solid var(--color-border); border-radius: 6px; width: 280px; font-size: 0.8125rem;">
-            </div>
-            <div class="matrix-table-container" style="max-height: 360px; overflow-y: auto;">
-              <table class="matrix-table">
-                <thead>
-                  <tr>
-                    <th>Disease Name</th>
-                    <th>Primary Specialists</th>
-                    <th>Associated Symptoms Count</th>
-                    <th>Top Characteristic Symptoms</th>
-                  </tr>
-                </thead>
-                <tbody id="dataset-table-body"></tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <!-- TABLEAU & POWER BI DASHBOARD DESIGNS FOR PRITI DAS -->
+        <!-- VISUAL DESIGN GALLERY SHOWCASE -->
         <section class="widget-card" style="margin-top: 20px;">
-          <h2 class="widget-title">📈 Tableau & Power BI Dashboard Screenshots (by Priti Das)</h2>
-          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 14px;">Customized healthcare analytics dashboard designs authored by Priti Das.</p>
+          <h2 class="widget-title">🎨 Visual UI Design Showcase & Dashboard Screenshots</h2>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 14px;">High-resolution visual design screenshots authored by Priti Das.</p>
           
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
-            <div style="background: var(--color-surface-elevated); padding: 14px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.9rem; color: var(--color-primary); margin-bottom: 8px;">Tableau Desktop Interface (Priti Das)</h4>
-              <img src="assets/tableau_dashboard_design.jpg" alt="Tableau Desktop Analytics Dashboard by Priti Das" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">1. Tableau Desktop Analytics Dashboard</h4>
+              <img src="assets/tableau_dashboard_design.jpg" alt="Tableau Dashboard Visual Design" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
-            <div style="background: var(--color-surface-elevated); padding: 14px; border-radius: 8px; border: 1px solid var(--color-border);">
-              <h4 style="font-size: 0.9rem; color: var(--color-primary); margin-bottom: 8px;">Power BI Executive Dashboard (Priti Das)</h4>
-              <img src="assets/powerbi_dashboard_design.jpg" alt="Power BI Analytics Dashboard by Priti Das" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
-            </div>
-          </div>
-        </section>
-
-        <!-- Tableau Dashboard & Healthcare UX Specification Overlay -->
-        <section id="tableau-spec-view" class="tableau-spec-view" aria-label="Healthcare UX & Tableau Specification">
-          <h2 class="widget-title">📊 Lead Healthcare UX Architecture & Disease Likelihood Spec</h2>
-          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 16px;">
-            Complete design blueprint, visual hierarchy matrix, WCAG 2.1 AA accessibility guidelines, and Tableau dashboard container layout specs.
-          </p>
-
-          <div class="spec-grid">
-            <div class="spec-box">
-              <h4>📱 Mobile Ergonomics & Thumb Zone</h4>
-              <ul>
-                <li><strong>Bottom-Anchored CTA:</strong> Primary actions placed within natural single-thumb arc (bottom 40% of viewport).</li>
-                <li><strong>Touch Targets:</strong> All interactive tags, chips, and buttons maintain minimum 48×48px dimensions.</li>
-                <li><strong>Type Scale:</strong> Title 18-20px bold, Subtitle 14px, Body 14px, Badges 12px for maximum legibility.</li>
-              </ul>
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">2. Power BI Executive Service Dashboard</h4>
+              <img src="assets/powerbi_dashboard_design.jpg" alt="Power BI Dashboard Visual Design" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
-            <div class="spec-box">
-              <h4>🎯 Disease Likelihood Percentage Formula</h4>
-              <p>Formula implemented:</p>
-              <code style="display:block; background: var(--color-bg-main); padding: 8px; border-radius: 4px; font-size: 0.8rem; margin: 6px 0; color: var(--color-primary);">
-                Likelihood % = (Matched / DiseaseTotal * 65%) + (Matched / UserSelected * 35%)
-              </code>
-              <ul>
-                <li><strong>High Likelihood (&ge;75%):</strong> Emerald Green (#10B981) gauge.</li>
-                <li><strong>Moderate Likelihood (45-74%):</strong> Amber (#F59E0B) gauge.</li>
-                <li><strong>Low Likelihood (&lt;45%):</strong> Slate (#94A3B8) gauge.</li>
-              </ul>
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">3. Mobile Smartphone Symptom Checker UI</h4>
+              <img src="assets/mobile_ui_design.jpg" alt="Mobile Symptom Checker UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
 
-            <div class="spec-box">
-              <h4>♿ WCAG 2.1 AA Accessibility Audit</h4>
-              <ul>
-                <li><strong>Color Contrast:</strong> Minimum 4.5:1 text-to-background contrast ratio across dark & light themes.</li>
-                <li><strong>Keyboard Focus:</strong> High-visibility 3px primary glow focus outline on all interactive inputs.</li>
-                <li><strong>Screen Readers:</strong> <code>aria-live="polite"</code> on dynamic result containers.</li>
-              </ul>
-            </div>
-
-            <div class="spec-box">
-              <h4>📈 Tableau Dashboard Container Blueprint</h4>
-              <ul>
-                <li><strong>Top Banner:</strong> Emergency Triage Alert Banner & Patient Profile Filter.</li>
-                <li><strong>Left Pane (350px):</strong> Interactive Symptom Selector Extension.</li>
-                <li><strong>Center Matrix:</strong> Disease Correlation & Severity Treemap Heatmap.</li>
-                <li><strong>Right Pane (300px):</strong> Specialist Referral Network Map & Appointment Booking Card.</li>
-              </ul>
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">4. Diagnostic Summary & Likelihood Gauge</h4>
+              <img src="assets/diagnostic_dashboard_design.jpg" alt="Diagnostic Card Dashboard UI" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             </div>
           </div>
         </section>
