@@ -1,4 +1,4 @@
-/* Modern Healthcare UX/UI Design System */
+/* Modern Healthcare UX/UI Design System - MediGraph v3.0 */
 :root {
   /* Brand & Healthcare Color Tokens */
   --color-bg-main: #0B132B;
@@ -16,7 +16,7 @@
   --color-text-body: #CBD5E1;
   --color-text-muted: #94A3B8;
 
-  /* Triage Severity System */
+  /* Triage Severity & Likelihood System */
   --severity-emergency-bg: rgba(239, 68, 68, 0.12);
   --severity-emergency-text: #FCA5A5;
   --severity-emergency-border: #EF4444;
@@ -124,17 +124,18 @@ body {
 
 .nav-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .btn-toggle {
   background: var(--color-surface-elevated);
   border: 1px solid var(--color-border);
   color: var(--color-text-title);
-  padding: 8px 16px;
+  padding: 8px 14px;
   border-radius: var(--radius-pill);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   cursor: pointer;
   min-height: var(--touch-target-min);
@@ -203,10 +204,6 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.emergency-banner svg {
-  flex-shrink: 0;
 }
 
 /* Main Application Area */
@@ -279,20 +276,83 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
+.widget-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
 .widget-title {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-text-title);
-  margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.widget-subtitle {
-  font-size: 0.875rem;
+/* Selector Mode Tabs */
+.selector-tab-bar {
+  display: flex;
+  gap: 8px;
+  background: var(--color-surface-elevated);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 14px;
+  border: 1px solid var(--color-border);
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
   color: var(--color-text-muted);
-  margin-bottom: 16px;
+  padding: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.tab-btn.active {
+  background: var(--color-bg-card);
+  color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Body Regions Selector */
+.body-regions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.region-chip {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-body);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.region-chip.active, .region-chip:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text-title);
+  background: var(--color-primary-glow);
 }
 
 /* Auto-complete Search Box */
@@ -484,11 +544,11 @@ body {
   border-color: var(--color-primary);
 }
 
-/* Diagnostics Results Section */
+/* Diagnostics Results Section & View Toggles */
 .results-header-bar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   margin-top: 10px;
 }
 
@@ -498,12 +558,32 @@ body {
   color: var(--color-text-title);
 }
 
-.results-count {
-  font-size: 0.875rem;
-  color: var(--color-text-muted);
+.results-view-toggles {
+  display: flex;
+  gap: 4px;
+  background: var(--color-surface-elevated);
+  padding: 2px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
 }
 
-/* Diagnostic Summary Card Design */
+.view-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.view-toggle-btn.active {
+  background: var(--color-bg-card);
+  color: var(--color-primary);
+}
+
+/* Diagnostic Summary Card Design with Percentage Circle */
 .diagnostic-card {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
@@ -524,7 +604,7 @@ body {
 .card-top-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   margin-bottom: 14px;
 }
@@ -536,6 +616,44 @@ body {
   text-transform: capitalize;
 }
 
+/* Percentage Gauge Circle */
+.percentage-gauge-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  border: 4px solid var(--color-surface-elevated);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.score-circle.high {
+  border-color: #10B981;
+  color: #6EE7B7;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.score-circle.medium {
+  border-color: #F59E0B;
+  color: #FCD34D;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.score-circle.low {
+  border-color: #64748B;
+  color: #CBD5E1;
+  background: rgba(148, 163, 184, 0.12);
+}
+
 .triage-badge {
   padding: 4px 10px;
   border-radius: var(--radius-pill);
@@ -545,6 +663,8 @@ body {
   letter-spacing: 0.04em;
   white-space: nowrap;
   border: 1px solid transparent;
+  display: inline-block;
+  margin-top: 4px;
 }
 
 .triage-badge.emergency {
@@ -582,15 +702,6 @@ body {
   color: var(--color-text-muted);
   font-weight: 500;
 }
-
-.score-val {
-  font-weight: 800;
-  font-size: 1rem;
-}
-
-.score-val.high { color: #10B981; }
-.score-val.medium { color: #F59E0B; }
-.score-val.low { color: #94A3B8; }
 
 .progress-track {
   width: 100%;
@@ -652,7 +763,7 @@ body {
   font-size: 0.75rem;
 }
 
-/* Recommended Specialist Hierarchy */
+/* Specialist Hierarchy & Buttons */
 .specialist-section {
   border-top: 1px solid var(--color-border);
   padding-top: 14px;
@@ -735,6 +846,88 @@ body {
   outline: none;
 }
 
+/* Differential Matrix View */
+.matrix-table-container {
+  overflow-x: auto;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.matrix-table th, .matrix-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.matrix-table th {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-title);
+  font-weight: 700;
+}
+
+/* Modal Overlay & Card */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(11, 19, 43, 0.85);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-active);
+  border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 480px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  color: var(--color-text-title);
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-summary-box {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  padding: 12px;
+  border-radius: 6px;
+}
+
 /* Empty State */
 .empty-state {
   text-align: center;
@@ -751,7 +944,7 @@ body {
   opacity: 0.6;
 }
 
-/* Dashboard Spec View (Tableau layout mode) */
+/* Tableau Spec View */
 .tableau-spec-view {
   display: none;
   background: var(--color-bg-card);

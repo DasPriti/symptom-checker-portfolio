@@ -1,20 +1,30 @@
-// Symptom Checker Application Logic & Diagnostic Engine
+// Symptom Checker Application Logic & Disease Likelihood Engine - MediGraph v3.0
 
 document.addEventListener('DOMContentLoaded', () => {
-  // State
+  // Application State
   const state = {
     selectedSymptoms: [],
     highlightedIndex: -1,
     currentSuggestions: [],
     theme: 'dark',
-    viewMode: 'device' // 'device' or 'desktop'
+    viewMode: 'device', // 'device' or 'desktop'
+    resultsDisplayMode: 'cards', // 'cards' or 'matrix'
+    selectedRegion: 'chest'
   };
 
-  // Popular quick chips
+  // Anatomical Body Regions Map
+  const BODY_REGION_SYMPTOMS = {
+    head: ["headache", "dizziness", "diminished vision", "seizures", "facial pain", "confusion", "slurring words", "ear pain", "loss of sensation"],
+    chest: ["chest pain", "shortness of breath", "cough", "palpitations", "wheezing", "chest tightness", "angina pectoris", "pressure chest", "rapid heart rate"],
+    abdomen: ["sharp abdominal pain", "nausea", "vomiting", "diarrhea", "constipation", "upper abdominal pain", "lower abdominal pain", "stomach bloating", "heartburn"],
+    limbs: ["joint pain", "knee pain", "back pain", "leg pain", "arm pain", "wrist pain", "hand or finger pain", "muscle pain", "shoulder pain"],
+    general: ["fever", "fatigue", "chills", "skin rash", "weight gain", "weight loss", "sweating", "itching of skin", "swelling"]
+  };
+
   const POPULAR_SYMPTOMS = [
     "chest pain", "shortness of breath", "fever", "cough", 
     "headache", "dizziness", "fatigue", "nausea", 
-    "joint pain", "back pain", "abdominal pain", "skin rash"
+    "joint pain", "back pain", "sharp abdominal pain", "skin rash"
   ];
 
   // DOM Elements
@@ -23,9 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectedTagsContainer = document.getElementById('selected-tags-container');
   const tagsCount = document.getElementById('tags-count');
   const quickChipsGrid = document.getElementById('quick-chips-grid');
+  const regionSymptomsList = document.getElementById('region-symptoms-list');
   const diagnosticResultsContainer = document.getElementById('diagnostic-results');
   const resultsCountEl = document.getElementById('results-count');
 
+  // Mode Toggles & Buttons
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const layoutToggleBtn = document.getElementById('layout-toggle-btn');
   const specToggleBtn = document.getElementById('spec-toggle-btn');
@@ -33,7 +45,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const tableauSpecView = document.getElementById('tableau-spec-view');
   const clearAllBtn = document.getElementById('clear-all-btn');
 
-  // Initialize Popular Quick Chips
+  // View Mode Toggles
+  const viewCardsBtn = document.getElementById('view-cards-btn');
+  const viewMatrixBtn = document.getElementById('view-matrix-btn');
+
+  // Tabs
+  const tabSearch = document.getElementById('tab-search');
+  const tabBody = document.getElementById('tab-body');
+  const contentSearch = document.getElementById('content-search');
+  const contentBody = document.getElementById('content-body');
+
+  // Modal Elements
+  const bookingModal = document.getElementById('booking-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const modalSummaryBox = document.getElementById('modal-summary-box');
+  const bookingForm = document.getElementById('booking-form');
+
+  // Initialize Quick Chips & Region Chips
   function renderQuickChips() {
     quickChipsGrid.innerHTML = '';
     POPULAR_SYMPTOMS.forEach(sym => {
@@ -47,7 +75,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Toggle Symptom Selection
+  function renderRegionSymptoms() {
+    regionSymptomsList.innerHTML = '';
+    const symptoms = BODY_REGION_SYMPTOMS[state.selectedRegion] || [];
+    symptoms.forEach(sym => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `chip-btn ${state.selectedSymptoms.includes(sym) ? 'selected' : ''}`;
+      btn.textContent = `+ ${sym}`;
+      btn.addEventListener('click', () => toggleSymptom(sym));
+      regionSymptomsList.appendChild(btn);
+    });
+  }
+
+  // Symptom Selection
   function toggleSymptom(symptom) {
     const index = state.selectedSymptoms.indexOf(symptom);
     if (index === -1) {
@@ -74,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUI();
   }
 
-  // Auto-complete Search Filtering
+  // Auto-complete Search Logic
   function handleInput() {
     const query = symptomInput.value.trim().toLowerCase();
     if (!query) {
@@ -82,10 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Filter available symptoms not already selected
     state.currentSuggestions = ALL_SYMPTOMS.filter(sym => 
       !state.selectedSymptoms.includes(sym) && sym.toLowerCase().includes(query)
-    ).slice(0, 8); // Limit to top 8 suggestions
+    ).slice(0, 8);
 
     state.highlightedIndex = -1;
     renderSuggestions(query);
@@ -103,9 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const item = document.createElement('div');
       item.className = `suggestion-item ${idx === state.highlightedIndex ? 'highlighted' : ''}`;
       item.setAttribute('role', 'option');
-      item.setAttribute('id', `opt-${idx}`);
       
-      // Highlight matching sub-text
       const matchPos = sym.toLowerCase().indexOf(query);
       if (matchPos !== -1) {
         const before = sym.substring(0, matchPos);
@@ -128,47 +166,13 @@ document.addEventListener('DOMContentLoaded', () => {
     state.highlightedIndex = -1;
   }
 
-  // Keyboard Navigation for Auto-complete
-  symptomInput.addEventListener('keydown', (e) => {
-    if (!suggestionsDropdown.classList.contains('open')) return;
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      state.highlightedIndex = (state.highlightedIndex + 1) % state.currentSuggestions.length;
-      updateHighlight();
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      state.highlightedIndex = (state.highlightedIndex - 1 + state.currentSuggestions.length) % state.currentSuggestions.length;
-      updateHighlight();
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (state.highlightedIndex >= 0 && state.highlightedIndex < state.currentSuggestions.length) {
-        addSymptom(state.currentSuggestions[state.highlightedIndex]);
-      } else if (state.currentSuggestions.length > 0) {
-        addSymptom(state.currentSuggestions[0]);
-      }
-    } else if (e.key === 'Escape') {
-      closeDropdown();
-    }
-  });
-
-  function updateHighlight() {
-    const items = suggestionsDropdown.querySelectorAll('.suggestion-item');
-    items.forEach((item, idx) => {
-      item.classList.toggle('highlighted', idx === state.highlightedIndex);
-      if (idx === state.highlightedIndex) {
-        item.scrollIntoView({ block: 'nearest' });
-      }
-    });
-  }
-
   // Render Selected Tags
   function renderSelectedTags() {
     selectedTagsContainer.innerHTML = '';
     tagsCount.textContent = `(${state.selectedSymptoms.length})`;
 
     if (state.selectedSymptoms.length === 0) {
-      selectedTagsContainer.innerHTML = `<span style="font-size: 0.875rem; color: var(--color-text-muted); font-style: italic;">No symptoms added yet. Type above or click quick chips.</span>`;
+      selectedTagsContainer.innerHTML = `<span style="font-size: 0.875rem; color: var(--color-text-muted); font-style: italic;">No symptoms added. Search above or select body region.</span>`;
       clearAllBtn.style.display = 'none';
       return;
     }
@@ -187,11 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Calculate Disease Matching & Diagnostic Score
+  // Disease Likelihood Calculation Algorithm
   function calculateDiagnostics() {
-    if (state.selectedSymptoms.length === 0) {
-      return [];
-    }
+    if (state.selectedSymptoms.length === 0) return [];
 
     const matches = MEDICAL_DATASET.map(item => {
       const diseaseSyms = item.symptoms;
@@ -199,24 +201,25 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (matchedSyms.length === 0) return null;
 
-      // Scoring formula: (Matched Symptoms / Disease Total Symptoms) * 0.6 + (Matched Symptoms / Selected Total) * 0.4
+      // Weighted Jaccard Likelihood Percentage Formula:
+      // (Matched / Disease Total) * 65% + (Matched / User Selected Total) * 35%
       const diseaseCoverage = matchedSyms.length / diseaseSyms.length;
       const userCoverage = matchedSyms.length / state.selectedSymptoms.length;
-      const score = Math.round((diseaseCoverage * 0.65 + userCoverage * 0.35) * 100);
+      const score = Math.min(99, Math.max(12, Math.round((diseaseCoverage * 0.65 + userCoverage * 0.35) * 100)));
 
-      // Determine Severity / Triage Level
+      // Determine Triage Severity
       let triage = 'routine';
       let triageLabel = 'Primary Care Referral';
       const isEmergency = matchedSyms.some(s => 
         ['pain chest', 'shortness of breath', 'unresponsiveness', 'st segment elevation', 'convulsions', 'loss of consciousness', 'haemorrhage'].includes(s.toLowerCase())
       );
 
-      if (isEmergency || score >= 80) {
+      if (isEmergency || score >= 75) {
         triage = 'emergency';
-        triageLabel = 'Urgent / Emergency Assessment';
+        triageLabel = '🚨 High Likelihood / Emergency Triage';
       } else if (score >= 45) {
         triage = 'urgent';
-        triageLabel = 'Specialist Evaluation Recommended';
+        triageLabel = '⚠️ Moderate Likelihood / Specialist Consult';
       }
 
       return {
@@ -231,12 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     }).filter(Boolean);
 
-    // Sort by Score descending
     return matches.sort((a, b) => b.score - a.score);
   }
 
-  // Render Diagnostic Summary Cards
-  function renderDiagnosticCards() {
+  // Render Diagnostic Results (Cards or Differential Matrix)
+  function renderDiagnosticResults() {
     const results = calculateDiagnostics();
     diagnosticResultsContainer.innerHTML = '';
     resultsCountEl.textContent = `${results.length} condition${results.length === 1 ? '' : 's'} matched`;
@@ -245,8 +247,8 @@ document.addEventListener('DOMContentLoaded', () => {
       diagnosticResultsContainer.innerHTML = `
         <div class="empty-state">
           <div class="empty-icon">🩺</div>
-          <h3>Select Symptoms to Begin Analysis</h3>
-          <p style="margin-top: 6px;">Add one or more symptoms above to view differential diagnostic matches and specialist recommendations.</p>
+          <h3>Add Symptoms to Calculate Disease Likelihood</h3>
+          <p style="margin-top: 6px;">Select symptoms via search or body region map to compute probability percentages and recommended specialist referrals.</p>
         </div>
       `;
       return;
@@ -256,22 +258,29 @@ document.addEventListener('DOMContentLoaded', () => {
       diagnosticResultsContainer.innerHTML = `
         <div class="empty-state">
           <div class="empty-icon">🔍</div>
-          <h3>No Direct Match Found</h3>
-          <p style="margin-top: 6px;">Try adjusting your selected symptoms or search for broader clinical signs.</p>
+          <h3>No Direct Disease Match Found</h3>
+          <p style="margin-top: 6px;">Try searching for broader symptoms or select additional body regions.</p>
         </div>
       `;
       return;
     }
 
+    if (state.resultsDisplayMode === 'matrix') {
+      renderDifferentialMatrix(results);
+    } else {
+      renderCardsView(results);
+    }
+  }
+
+  // Render Card View with Circular Percentage Gauges
+  function renderCardsView(results) {
     results.forEach(res => {
       const card = document.createElement('article');
       card.className = 'diagnostic-card';
-      card.setAttribute('aria-label', `Diagnostic result for ${res.disease}`);
 
-      // Score classification
       let scoreClass = 'low';
-      if (res.score >= 70) scoreClass = 'high';
-      else if (res.score >= 40) scoreClass = 'medium';
+      if (res.score >= 75) scoreClass = 'high';
+      else if (res.score >= 45) scoreClass = 'medium';
 
       card.innerHTML = `
         <div class="card-top-row">
@@ -279,13 +288,18 @@ document.addEventListener('DOMContentLoaded', () => {
             <h3 class="disease-name">${res.disease}</h3>
             <span class="triage-badge ${res.triage}">${res.triageLabel}</span>
           </div>
-          <div class="score-val ${scoreClass}">${res.score}% Match</div>
+          
+          <div class="percentage-gauge-badge">
+            <div class="score-circle ${scoreClass}">
+              ${res.score}%
+            </div>
+          </div>
         </div>
 
         <div class="score-section">
           <div class="score-header">
-            <span class="score-label">Clinical Correlation Score</span>
-            <span style="font-size: 0.8125rem; color: var(--color-text-muted);">${res.matchedSymptoms.length} of ${res.symptoms.length} symptoms match</span>
+            <span class="score-label">Clinical Probability & Overlap</span>
+            <span style="font-size: 0.8125rem; color: var(--color-text-muted);">${res.matchedSymptoms.length} of ${res.symptoms.length} symptoms matched</span>
           </div>
           <div class="progress-track" role="progressbar" aria-valuenow="${res.score}" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill ${scoreClass}" style="width: ${res.score}%;"></div>
@@ -299,10 +313,10 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           ${res.unmatchedSymptoms.length > 0 ? `
-            <div class="breakdown-title" style="margin-top: 10px;">Other Characteristic Symptoms (${res.unmatchedSymptoms.length})</div>
+            <div class="breakdown-title" style="margin-top: 10px;">Additional Disease Indicators (${res.unmatchedSymptoms.length})</div>
             <div class="match-pills-row">
-              ${res.unmatchedSymptoms.slice(0, 6).map(s => `<span class="pill-unmatched">${s}</span>`).join('')}
-              ${res.unmatchedSymptoms.length > 6 ? `<span class="pill-unmatched">+${res.unmatchedSymptoms.length - 6} more</span>` : ''}
+              ${res.unmatchedSymptoms.slice(0, 5).map(s => `<span class="pill-unmatched">${s}</span>`).join('')}
+              ${res.unmatchedSymptoms.length > 5 ? `<span class="pill-unmatched">+${res.unmatchedSymptoms.length - 5} more</span>` : ''}
             </div>
           ` : ''}
         </div>
@@ -318,36 +332,157 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <div class="action-btn-row">
-          <button type="button" class="btn-cta">
-            Find Specialist nearby
+          <button type="button" class="btn-cta book-consult-btn" data-disease="${res.disease}" data-score="${res.score}" data-specialist="${res.specialists[0] || 'Specialist'}">
+            Book Specialist Consult
           </button>
           <button type="button" class="btn-secondary">
-            Condition Info
+            Disease Profile
           </button>
         </div>
       `;
 
       diagnosticResultsContainer.appendChild(card);
     });
+
+    // Attach Event Listeners to Book Consult Buttons
+    document.querySelectorAll('.book-consult-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const dName = e.currentTarget.getAttribute('data-disease');
+        const dScore = e.currentTarget.getAttribute('data-score');
+        const dSpec = e.currentTarget.getAttribute('data-specialist');
+        openBookingModal(dName, dScore, dSpec);
+      });
+    });
   }
 
-  // Update All UI Components
+  // Render Differential Comparison Matrix View
+  function renderDifferentialMatrix(results) {
+    const tableContainer = document.createElement('div');
+    tableContainer.className = 'matrix-table-container';
+
+    let tableHTML = `
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Disease Condition</th>
+            <th>Likelihood %</th>
+            <th>Matched Symptoms</th>
+            <th>Recommended Specialist</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    results.forEach(res => {
+      tableHTML += `
+        <tr>
+          <td style="font-weight: 700; text-transform: capitalize;">${res.disease}</td>
+          <td><span class="score-val ${res.score >= 75 ? 'high' : (res.score >= 45 ? 'medium' : 'low')}">${res.score}%</span></td>
+          <td>${res.matchedSymptoms.map(s => `<span class="pill-matched" style="display:inline-block; margin: 2px;">${s}</span>`).join('')}</td>
+          <td>${res.specialists.map(sp => `<span class="specialist-chip" style="font-size: 0.75rem;">${sp}</span>`).join(' ')}</td>
+          <td><button class="btn-cta book-consult-btn" style="padding: 4px 10px; font-size: 0.75rem; min-height: 32px;" data-disease="${res.disease}" data-score="${res.score}" data-specialist="${res.specialists[0] || 'Specialist'}">Book Consult</button></td>
+        </tr>
+      `;
+    });
+
+    tableHTML += `</tbody></table>`;
+    tableContainer.innerHTML = tableHTML;
+    diagnosticResultsContainer.appendChild(tableContainer);
+
+    document.querySelectorAll('.book-consult-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const dName = e.currentTarget.getAttribute('data-disease');
+        const dScore = e.currentTarget.getAttribute('data-score');
+        const dSpec = e.currentTarget.getAttribute('data-specialist');
+        openBookingModal(dName, dScore, dSpec);
+      });
+    });
+  }
+
+  // Telehealth Booking Modal Logic
+  function openBookingModal(disease, score, specialist) {
+    modalSummaryBox.innerHTML = `
+      <div style="font-weight: 700; color: var(--color-text-title); text-transform: capitalize; font-size: 1.05rem;">
+        Condition: ${disease} (${score}% Likelihood)
+      </div>
+      <div style="margin-top: 6px; font-size: 0.85rem; color: var(--color-primary);">
+        Assigned Specialist Type: ${specialist}
+      </div>
+      <div style="margin-top: 6px; font-size: 0.8125rem; color: var(--color-text-muted);">
+        Reported Patient Symptoms: ${state.selectedSymptoms.join(', ')}
+      </div>
+    `;
+    bookingModal.classList.add('open');
+  }
+
+  closeModalBtn.addEventListener('click', () => bookingModal.classList.remove('open'));
+  bookingModal.addEventListener('click', (e) => {
+    if (e.target === bookingModal) bookingModal.classList.remove('open');
+  });
+
+  bookingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('🎉 Telehealth Consultation Request Confirmed! A medical coordinator will contact you shortly.');
+    bookingModal.classList.remove('open');
+  });
+
+  // Tab Bar Switcher
+  tabSearch.addEventListener('click', () => {
+    tabSearch.classList.add('active');
+    tabBody.classList.remove('active');
+    contentSearch.classList.add('active');
+    contentBody.classList.remove('active');
+  });
+
+  tabBody.addEventListener('click', () => {
+    tabBody.classList.add('active');
+    tabSearch.classList.remove('active');
+    contentBody.classList.add('active');
+    contentSearch.classList.remove('active');
+    renderRegionSymptoms();
+  });
+
+  // Body Region Chips Click
+  document.querySelectorAll('.region-chip').forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      document.querySelectorAll('.region-chip').forEach(c => c.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      state.selectedRegion = e.currentTarget.getAttribute('data-region');
+      renderRegionSymptoms();
+    });
+  });
+
+  // View Display Mode Toggles (Cards vs Matrix)
+  viewCardsBtn.addEventListener('click', () => {
+    state.resultsDisplayMode = 'cards';
+    viewCardsBtn.classList.add('active');
+    viewMatrixBtn.classList.remove('active');
+    renderDiagnosticResults();
+  });
+
+  viewMatrixBtn.addEventListener('click', () => {
+    state.resultsDisplayMode = 'matrix';
+    viewMatrixBtn.classList.add('active');
+    viewCardsBtn.classList.remove('active');
+    renderDiagnosticResults();
+  });
+
+  // Update Full UI
   function updateUI() {
     renderQuickChips();
     renderSelectedTags();
-    renderDiagnosticCards();
+    renderDiagnosticResults();
   }
 
-  // Event Listeners
+  // Input Event Listeners
   symptomInput.addEventListener('input', handleInput);
   symptomInput.addEventListener('focus', () => {
     if (symptomInput.value.trim()) handleInput();
   });
 
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('.search-input-group')) {
-      closeDropdown();
-    }
+    if (!e.target.closest('.search-input-group')) closeDropdown();
   });
 
   clearAllBtn.addEventListener('click', () => {
@@ -355,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUI();
   });
 
-  // Mode Toggles
+  // Header Mode Toggles
   themeToggleBtn.addEventListener('click', () => {
     state.theme = state.theme === 'dark' ? 'light' : 'dark';
     document.body.setAttribute('data-theme', state.theme);
@@ -366,16 +501,16 @@ document.addEventListener('DOMContentLoaded', () => {
     state.viewMode = state.viewMode === 'device' ? 'desktop' : 'device';
     if (state.viewMode === 'desktop') {
       layoutWrapper.className = 'layout-wrapper desktop-mode';
-      layoutToggleBtn.innerHTML = '📱 Mobile Frame View';
+      layoutToggleBtn.innerHTML = '📱 Mobile View';
     } else {
       layoutWrapper.className = 'layout-wrapper device-frame-mode';
-      layoutToggleBtn.innerHTML = '🖥️ Expanded Dashboard View';
+      layoutToggleBtn.innerHTML = '🖥️ Desktop View';
     }
   });
 
   specToggleBtn.addEventListener('click', () => {
     const isActive = tableauSpecView.classList.toggle('active');
-    specToggleBtn.innerHTML = isActive ? '📊 Hide Tableau/UX Spec' : '📊 View Tableau/UX Spec';
+    specToggleBtn.innerHTML = isActive ? '📊 Hide UX Spec' : '📊 View UX Spec';
   });
 
   // Initial Render

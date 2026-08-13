@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Mobile-First Medical Graph Symptom Checker & Specialist Recommendation App UI Wireframe and Interactive Prototype">
-  <title>MediGraph Mobile Symptom Checker & Specialist Recommendation UI</title>
+  <meta name="description" content="MediGraph - Mobile-First Symptom Checker, Disease Likelihood Percentage Estimator & Specialist Recommendation Engine">
+  <title>MediGraph - Medical Symptom Checker & Disease Likelihood UI</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,8 +17,8 @@
     <div class="brand-title">
       <div class="brand-icon" aria-hidden="true">+</div>
       <div>
-        <h1>MediGraph UX Wireframe</h1>
-        <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500;">Lead Healthcare UX/UI Framework</div>
+        <h1>MediGraph UX Engine</h1>
+        <div style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500;">Disease Likelihood & Specialist Referral System</div>
       </div>
     </div>
 
@@ -27,10 +27,10 @@
         ☀️ Light Mode
       </button>
       <button id="layout-toggle-btn" class="btn-toggle" aria-label="Toggle mobile frame or expanded desktop layout">
-        🖥️ Expanded View
+        🖥️ Desktop View
       </button>
       <button id="spec-toggle-btn" class="btn-toggle" aria-label="Toggle Tableau Dashboard Layout Specification">
-        📊 View Tableau/UX Spec
+        📊 View UX Spec
       </button>
     </div>
   </header>
@@ -41,7 +41,7 @@
       
       <!-- Status & Emergency Bar -->
       <div class="app-status-bar">
-        <span>MediGraph Mobile v2.4</span>
+        <span>MediGraph Clinical v3.0</span>
         <span>WCAG 2.1 AA Compliant</span>
       </div>
 
@@ -49,7 +49,7 @@
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
         </svg>
-        <span>If experiencing severe chest pain or sudden weakness, call 911 immediately.</span>
+        <span>If experiencing severe chest pain, stroke signs, or extreme distress, call 911 immediately.</span>
       </div>
 
       <div class="app-content">
@@ -58,47 +58,67 @@
         <nav class="step-indicator" aria-label="Symptom Checker Progress">
           <div class="step-item active">
             <div class="step-number">1</div>
-            <div class="step-label">Select Symptoms</div>
+            <div class="step-label">Add Symptoms</div>
           </div>
           <div class="step-item active">
             <div class="step-number">2</div>
-            <div class="step-label">Disease Match</div>
+            <div class="step-label">Disease Likelihood %</div>
           </div>
           <div class="step-item active">
             <div class="step-number">3</div>
-            <div class="step-label">Specialists</div>
+            <div class="step-label">Specialist Consult</div>
           </div>
         </nav>
 
         <!-- WIDGET 1: Interactive Symptom Selector Widget -->
         <section class="widget-card" aria-labelledby="symptom-widget-title">
-          <h2 id="symptom-widget-title" class="widget-title">
-            <svg width="20" height="20" fill="none" stroke="var(--color-primary)" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-            Interactive Symptom Selector
-          </h2>
-          <p class="widget-subtitle">Type your symptoms or tap popular quick tags below</p>
-
-          <!-- Auto-complete Input -->
-          <div class="search-input-group">
-            <div class="search-input-wrapper">
-              <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <div class="widget-header-row">
+            <h2 id="symptom-widget-title" class="widget-title">
+              <svg width="20" height="20" fill="none" stroke="var(--color-primary)" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
-              <input 
-                type="text" 
-                id="symptom-input" 
-                class="symptom-input" 
-                placeholder="Search symptom (e.g. chest pain, fever, dizziness)..."
-                autocomplete="off"
-                aria-autocomplete="list"
-                aria-controls="suggestions-dropdown"
-                aria-expanded="false"
-              />
+              Symptom Entry & Anatomical Selector
+            </h2>
+          </div>
+
+          <!-- Selector Mode Tabs -->
+          <div class="selector-tab-bar" role="tablist">
+            <button id="tab-search" class="tab-btn active" role="tab" aria-selected="true">🔍 Auto-Complete Search</button>
+            <button id="tab-body" class="tab-btn" role="tab" aria-selected="false">🧘 Body Area Map</button>
+          </div>
+
+          <!-- Tab Content 1: Auto-complete Search Input -->
+          <div id="content-search" class="tab-content active">
+            <div class="search-input-group">
+              <div class="search-input-wrapper">
+                <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input 
+                  type="text" 
+                  id="symptom-input" 
+                  class="symptom-input" 
+                  placeholder="Search symptom (e.g. chest pain, fever, dizziness)..."
+                  autocomplete="off"
+                  aria-autocomplete="list"
+                  aria-controls="suggestions-dropdown"
+                  aria-expanded="false"
+                />
+              </div>
+              <div id="suggestions-dropdown" class="suggestions-dropdown" role="listbox" aria-label="Symptom Suggestions"></div>
             </div>
-            <!-- Auto-complete Suggestions Dropdown -->
-            <div id="suggestions-dropdown" class="suggestions-dropdown" role="listbox" aria-label="Symptom Suggestions"></div>
+          </div>
+
+          <!-- Tab Content 2: Anatomical Body Map Regions -->
+          <div id="content-body" class="tab-content">
+            <div class="body-regions-grid">
+              <button class="region-chip" data-region="head">🧠 Head & Neurological</button>
+              <button class="region-chip" data-region="chest">🫁 Chest & Respiratory</button>
+              <button class="region-chip" data-region="abdomen">🩺 Abdomen & Digestive</button>
+              <button class="region-chip" data-region="limbs">🦴 Joints & Limbs</button>
+              <button class="region-chip" data-region="general">🔥 Skin & General</button>
+            </div>
+            <div id="region-symptoms-list" class="quick-chips-grid" style="margin-top: 10px;"></div>
           </div>
 
           <!-- Active Selected Tags -->
@@ -112,26 +132,33 @@
 
           <!-- Quick Suggestion Chips -->
           <div>
-            <div class="quick-chips-title">Popular Quick Chips</div>
+            <div class="quick-chips-title">Frequent Symptom Quick Chips</div>
             <div id="quick-chips-grid" class="quick-chips-grid"></div>
           </div>
         </section>
 
-        <!-- WIDGET 2: Differential Diagnostic Results & Summary Cards -->
+        <!-- WIDGET 2: Diagnostic Results & Disease Likelihood Percentage Cards -->
         <section aria-labelledby="results-title-id">
           <div class="results-header-bar">
-            <h2 id="results-title-id" class="results-title">Diagnostic Matches</h2>
-            <span id="results-count" class="results-count">0 conditions matched</span>
+            <div>
+              <h2 id="results-title-id" class="results-title">Disease Likelihood Matches</h2>
+              <p style="font-size: 0.8125rem; color: var(--color-text-muted);">Calculated likelihood percentage based on matching symptom overlap</p>
+            </div>
+            <div class="results-view-toggles">
+              <button id="view-cards-btn" class="view-toggle-btn active" title="Card View">📇 Cards</button>
+              <button id="view-matrix-btn" class="view-toggle-btn" title="Differential Comparison Matrix">📊 Matrix</button>
+            </div>
           </div>
 
+          <!-- Container for Dynamic Diagnostic Cards / Matrix -->
           <div id="diagnostic-results" style="margin-top: 14px;" aria-live="polite"></div>
         </section>
 
         <!-- Tableau Dashboard & Healthcare UX Specification Overlay -->
         <section id="tableau-spec-view" class="tableau-spec-view" aria-label="Healthcare UX & Tableau Specification">
-          <h2 class="widget-title">📊 Healthcare UX Architecture & Tableau Layout Specification</h2>
+          <h2 class="widget-title">📊 Lead Healthcare UX Architecture & Disease Likelihood Spec</h2>
           <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 16px;">
-            Comprehensive design blueprint, visual hierarchy matrix, WCAG 2.1 AA accessibility guidelines, and Tableau dashboard container layout specs.
+            Complete design blueprint, visual hierarchy matrix, WCAG 2.1 AA accessibility guidelines, and Tableau dashboard container layout specs.
           </p>
 
           <div class="spec-grid">
@@ -140,20 +167,20 @@
               <ul>
                 <li><strong>Bottom-Anchored CTA:</strong> Primary actions placed within natural single-thumb arc (bottom 40% of viewport).</li>
                 <li><strong>Touch Targets:</strong> All interactive tags, chips, and buttons maintain minimum 48×48px dimensions.</li>
-                <li><strong>Type Scale:</strong> Title 18-20px bold, Subtitle 14px, Body 14px, Badges 12px for maximum legibility on 375-430px screens.</li>
+                <li><strong>Type Scale:</strong> Title 18-20px bold, Subtitle 14px, Body 14px, Badges 12px for maximum legibility.</li>
               </ul>
             </div>
 
             <div class="spec-box">
-              <h4>🎯 Correlation Scoring Algorithm</h4>
+              <h4>🎯 Disease Likelihood Percentage Formula</h4>
               <p>Formula implemented:</p>
               <code style="display:block; background: var(--color-bg-main); padding: 8px; border-radius: 4px; font-size: 0.8rem; margin: 6px 0; color: var(--color-primary);">
-                Match % = (Matched / DiseaseTotal * 65%) + (Matched / UserSelected * 35%)
+                Likelihood % = (Matched / DiseaseTotal * 65%) + (Matched / UserSelected * 35%)
               </code>
               <ul>
-                <li><strong>High Match (&ge;70%):</strong> Emerald Green (#10B981) gauge.</li>
-                <li><strong>Moderate Match (40-69%):</strong> Amber (#F59E0B) gauge.</li>
-                <li><strong>Low Match (&lt;40%):</strong> Slate (#94A3B8) gauge.</li>
+                <li><strong>High Likelihood (&ge;75%):</strong> Emerald Green (#10B981) gauge.</li>
+                <li><strong>Moderate Likelihood (45-74%):</strong> Amber (#F59E0B) gauge.</li>
+                <li><strong>Low Likelihood (&lt;45%):</strong> Slate (#94A3B8) gauge.</li>
               </ul>
             </div>
 
@@ -162,17 +189,17 @@
               <ul>
                 <li><strong>Color Contrast:</strong> Minimum 4.5:1 text-to-background contrast ratio across dark & light themes.</li>
                 <li><strong>Keyboard Focus:</strong> High-visibility 3px primary glow focus outline on all interactive inputs.</li>
-                <li><strong>Screen Readers:</strong> <code>aria-live="polite"</code> on dynamic result containers and <code>aria-pressed</code> state management.</li>
+                <li><strong>Screen Readers:</strong> <code>aria-live="polite"</code> on dynamic result containers.</li>
               </ul>
             </div>
 
             <div class="spec-box">
               <h4>📈 Tableau Dashboard Container Blueprint</h4>
               <ul>
-                <li><strong>Top Container (Tiled, 100px height):</strong> Emergency Triage Alert Banner & Patient Profile Filter.</li>
-                <li><strong>Left Pane (Fixed 350px):</strong> Interactive Symptom Selector (Custom HTML/JS Extension / Filter Parameter).</li>
-                <li><strong>Center Matrix (Flex Auto):</strong> Differential Diagnosis Treemap / Scatterplot (Correlation Score vs Severity).</li>
-                <li><strong>Right Pane (Fixed 300px):</strong> Specialist Referral Network Map & Appointment Booking Action Card.</li>
+                <li><strong>Top Banner:</strong> Emergency Triage Alert Banner & Patient Profile Filter.</li>
+                <li><strong>Left Pane (350px):</strong> Interactive Symptom Selector Extension.</li>
+                <li><strong>Center Matrix:</strong> Differential Diagnosis Heatmap (Correlation Score vs Severity).</li>
+                <li><strong>Right Pane (300px):</strong> Specialist Referral Network Map & Appointment Booking Card.</li>
               </ul>
             </div>
           </div>
@@ -181,6 +208,36 @@
       </div>
     </div>
   </main>
+
+  <!-- Telehealth Booking Modal -->
+  <div id="booking-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title">👨‍⚕️ Book Specialist Consultation</h3>
+        <button id="close-modal-btn" class="close-btn" aria-label="Close modal">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 12px;">
+          Pre-filled summary based on your selected symptoms and disease likelihood analysis:
+        </p>
+        <div id="modal-summary-box" class="modal-summary-box"></div>
+
+        <form id="booking-form" style="margin-top: 14px; display: flex; flex-direction: column; gap: 10px;">
+          <div>
+            <label style="font-size: 0.8125rem; color: var(--color-text-muted); font-weight: 600;">Patient Name</label>
+            <input type="text" required class="symptom-input" style="background: var(--color-surface-elevated); padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 6px; width: 100%; margin-top: 4px;" value="Alex Morgan">
+          </div>
+          <div>
+            <label style="font-size: 0.8125rem; color: var(--color-text-muted); font-weight: 600;">Preferred Consultation Date</label>
+            <input type="date" required class="symptom-input" style="background: var(--color-surface-elevated); padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 6px; width: 100%; margin-top: 4px;" value="2026-08-14">
+          </div>
+          <button type="submit" class="btn-cta" style="margin-top: 10px;">
+            Confirm Telehealth Appointment Request
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- Load Data and Application Logic -->
   <script src="data.js"></script>
