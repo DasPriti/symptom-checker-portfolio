@@ -23,9 +23,12 @@
     </div>
 
     <div class="nav-actions">
-      <button id="theme-toggle-btn" class="btn-toggle" aria-label="Toggle dark/light mode">
-        ☀️ Light Mode
-      </button>
+      <select id="theme-select" class="theme-select-dropdown" aria-label="Select Theme Preset">
+        <option value="dark">🌙 Dark Slate Theme</option>
+        <option value="light">☀️ Clinical Light Theme</option>
+        <option value="high-contrast">👁️ High Contrast (WCAG AAA)</option>
+      </select>
+
       <button id="layout-toggle-btn" class="btn-toggle" aria-label="Toggle mobile frame or expanded desktop layout">
         🖥️ Desktop View
       </button>
@@ -41,7 +44,7 @@
       
       <!-- Status & Emergency Bar -->
       <div class="app-status-bar">
-        <span>MediGraph Clinical v3.0</span>
+        <span>MediGraph Clinical v3.2</span>
         <span>WCAG 2.1 AA Compliant</span>
       </div>
 
@@ -152,6 +155,22 @@
 
           <!-- Container for Dynamic Diagnostic Cards / Matrix -->
           <div id="diagnostic-results" style="margin-top: 14px;" aria-live="polite"></div>
+        </section>
+
+        <!-- Visual UI Design Gallery Showcase Section -->
+        <section class="widget-card" style="margin-top: 20px;">
+          <h2 class="widget-title">🎨 Visual UI Design Showcase & Screenshots</h2>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 14px;">High-resolution visual mockups of the mobile interface & diagnostic correlation summary card.</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">1. Mobile Smartphone UI Layout</h4>
+              <img src="assets/mobile_ui_design.jpg" alt="Mobile Symptom Checker UI Mockup" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            </div>
+            <div style="background: var(--color-surface-elevated); padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.875rem; color: var(--color-primary); margin-bottom: 8px;">2. Diagnostic Summary & Correlation Card</h4>
+              <img src="assets/diagnostic_dashboard_design.jpg" alt="Diagnostic Card Dashboard UI Mockup" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            </div>
+          </div>
         </section>
 
         <!-- Tableau Dashboard & Healthcare UX Specification Overlay -->

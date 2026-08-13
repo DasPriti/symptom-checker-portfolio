@@ -1,4 +1,4 @@
-// Symptom Checker Application Logic & Disease Likelihood Engine - MediGraph v3.0
+// Symptom Checker Application Logic & Disease Likelihood Engine - MediGraph v3.2
 
 document.addEventListener('DOMContentLoaded', () => {
   // Application State
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultsCountEl = document.getElementById('results-count');
 
   // Mode Toggles & Buttons
-  const themeToggleBtn = document.getElementById('theme-toggle-btn');
+  const themeSelect = document.getElementById('theme-select');
   const layoutToggleBtn = document.getElementById('layout-toggle-btn');
   const specToggleBtn = document.getElementById('spec-toggle-btn');
   const layoutWrapper = document.getElementById('layout-wrapper');
@@ -201,13 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (matchedSyms.length === 0) return null;
 
-      // Weighted Jaccard Likelihood Percentage Formula:
-      // (Matched / Disease Total) * 65% + (Matched / User Selected Total) * 35%
       const diseaseCoverage = matchedSyms.length / diseaseSyms.length;
       const userCoverage = matchedSyms.length / state.selectedSymptoms.length;
       const score = Math.min(99, Math.max(12, Math.round((diseaseCoverage * 0.65 + userCoverage * 0.35) * 100)));
 
-      // Determine Triage Severity
       let triage = 'routine';
       let triageLabel = 'Primary Care Referral';
       const isEmergency = matchedSyms.some(s => 
@@ -237,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return matches.sort((a, b) => b.score - a.score);
   }
 
-  // Render Diagnostic Results (Cards or Differential Matrix)
+  // Render Diagnostic Results
   function renderDiagnosticResults() {
     const results = calculateDiagnostics();
     diagnosticResultsContainer.innerHTML = '';
@@ -272,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Render Card View with Circular Percentage Gauges
+  // Render Card View
   function renderCardsView(results) {
     results.forEach(res => {
       const card = document.createElement('article');
@@ -344,7 +341,6 @@ document.addEventListener('DOMContentLoaded', () => {
       diagnosticResultsContainer.appendChild(card);
     });
 
-    // Attach Event Listeners to Book Consult Buttons
     document.querySelectorAll('.book-consult-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const dName = e.currentTarget.getAttribute('data-disease');
@@ -355,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Render Differential Comparison Matrix View
+  // Render Differential Matrix View
   function renderDifferentialMatrix(results) {
     const tableContainer = document.createElement('div');
     tableContainer.className = 'matrix-table-container';
@@ -468,6 +464,12 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDiagnosticResults();
   });
 
+  // Theme Dropdown Handler
+  themeSelect.addEventListener('change', (e) => {
+    state.theme = e.target.value;
+    document.body.setAttribute('data-theme', state.theme);
+  });
+
   // Update Full UI
   function updateUI() {
     renderQuickChips();
@@ -488,13 +490,6 @@ document.addEventListener('DOMContentLoaded', () => {
   clearAllBtn.addEventListener('click', () => {
     state.selectedSymptoms = [];
     updateUI();
-  });
-
-  // Header Mode Toggles
-  themeToggleBtn.addEventListener('click', () => {
-    state.theme = state.theme === 'dark' ? 'light' : 'dark';
-    document.body.setAttribute('data-theme', state.theme);
-    themeToggleBtn.innerHTML = state.theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
   });
 
   layoutToggleBtn.addEventListener('click', () => {

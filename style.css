@@ -1,6 +1,6 @@
-/* Modern Healthcare UX/UI Design System - MediGraph v3.0 */
+/* Modern Healthcare UX/UI Design System - MediGraph v3.2 */
 :root {
-  /* Brand & Healthcare Color Tokens */
+  /* Brand & Healthcare Color Tokens (Dark Theme Default) */
   --color-bg-main: #0B132B;
   --color-bg-card: #1C2541;
   --color-bg-card-hover: #232F54;
@@ -42,13 +42,13 @@
   --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Light Theme Overrides when toggled */
+/* Light Medical Theme */
 [data-theme="light"] {
   --color-bg-main: #F1F5F9;
   --color-bg-card: #FFFFFF;
   --color-bg-card-hover: #F8FAFC;
   --color-surface-elevated: #F8FAFC;
-  --color-border: #E2E8F0;
+  --color-border: #CBD5E1;
   --color-border-active: #0284C7;
 
   --color-primary: #0284C7;
@@ -65,6 +65,36 @@
   --severity-urgent-text: #92400E;
   --severity-routine-bg: #ECFDF5;
   --severity-routine-text: #065F46;
+}
+
+/* High-Contrast WCAG AAA Theme */
+[data-theme="high-contrast"] {
+  --color-bg-main: #000000;
+  --color-bg-card: #121212;
+  --color-bg-card-hover: #1E1E1E;
+  --color-surface-elevated: #1E1E1E;
+  --color-border: #FFFFFF;
+  --color-border-active: #FFEA00;
+
+  --color-primary: #FFEA00;
+  --color-primary-dark: #FFC400;
+  --color-primary-glow: rgba(255, 234, 0, 0.3);
+
+  --color-text-title: #FFFFFF;
+  --color-text-body: #FFFFFF;
+  --color-text-muted: #E0E0E0;
+
+  --severity-emergency-bg: #000000;
+  --severity-emergency-text: #FF5252;
+  --severity-emergency-border: #FF5252;
+
+  --severity-urgent-bg: #000000;
+  --severity-urgent-text: #FFEA00;
+  --severity-urgent-border: #FFEA00;
+
+  --severity-routine-bg: #000000;
+  --severity-routine-text: #00FF66;
+  --severity-routine-border: #00FF66;
 }
 
 * {
@@ -118,7 +148,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFF;
+  color: #000;
   font-weight: bold;
 }
 
@@ -149,6 +179,19 @@ body {
   border-color: var(--color-primary);
   background: var(--color-primary-glow);
   outline: none;
+}
+
+.theme-select-dropdown {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-title);
+  padding: 8px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  min-height: var(--touch-target-min);
 }
 
 /* Device Shell Layout Toggle */
